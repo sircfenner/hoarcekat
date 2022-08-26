@@ -42,7 +42,7 @@ function FloatingButton:render()
 					pressed = self.pressed,
 				}):map(function(state)
 					return theme:GetColor(
-						"MainButton",
+						"DialogMainButton",
 						state.pressed
 							and "Pressed"
 							or (state.hovered
