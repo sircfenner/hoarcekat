@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### Fixed
+- Stories list items no longer have incorrect widths; this fixes the horizontal scrollbar size.
+- Floating buttons no longer get stuck in pressed state after a specific sequence of inputs.
+
+### Changed
+- Scrollbars and floating buttons are no longer hard to see in Light mode.
+- Preview padding is now applied consistently on all sides.
+- Neatness improvements to scrollbars, list items, and floating buttons.
+
 ## [1.2.1]
 ### Changed
 - Improved live editing experience by retaining last working preview and delaying error messages. ([#27](https://github.com/Kampfkarren/hoarcekat/pull/27))
