@@ -9,23 +9,23 @@ local e = Roact.createElement
 local FloatingButton = Roact.Component:extend("FloatingButton")
 
 function FloatingButton:init()
-	self.hovered, self.setHovered = Roact.createBinding(false)
-	self.pressed, self.setPressed = Roact.createBinding(false)
-
-	self.hover = function()
-		self.setHovered(true)
+	self:setState({
+		hovered = false,
+		pressed = false,
+	})
+	self.onInputBegan = function(_, input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement then
+			self:setState({ hovered = true })
+		elseif input.UserInputType == Enum.UserInputType.MouseButton1 then
+			self:setState({ pressed = true })
+		end
 	end
-
-	self.unhover = function()
-		self.setHovered(false)
-	end
-
-	self.press = function()
-		self.setPressed(true)
-	end
-
-	self.unpress = function()
-		self.setPressed(false)
+	self.onInputEnded = function(_, input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement then
+			self:setState({ hovered = false })
+		elseif input.UserInputType == Enum.UserInputType.MouseButton1 then
+			self:setState({ pressed = false })
+		end
 	end
 end
 
@@ -34,29 +34,20 @@ function FloatingButton:render()
 
 	return e(StudioThemeAccessor, {}, {
 		function(theme)
+			local modifier = "Default"
+			if self.state.pressed then
+				modifier = "Pressed"
+			elseif self.state.hovered then
+				modifier = "Hover"
+			end
 			return e("ImageButton", {
 				BackgroundTransparency = 1,
 				Image = Assets.button_fill,
-				ImageColor3 = Roact.joinBindings({
-					hovered = self.hovered,
-					pressed = self.pressed,
-				}):map(function(state)
-					return theme:GetColor(
-						"DialogMainButton",
-						state.pressed
-							and "Pressed"
-							or (state.hovered
-								and "Hover"
-								or "Default"
-							)
-					)
-				end),
+				ImageColor3 = theme:GetColor("DialogMainButton", modifier),
 				Size = UDim2.new(props.Size, props.Size),
 
-				[Roact.Event.MouseEnter] = self.hover,
-				[Roact.Event.MouseLeave] = self.unhover,
-				[Roact.Event.MouseButton1Down] = self.press,
-				[Roact.Event.MouseButton1Up] = self.unpress,
+				[Roact.Event.InputBegan] = self.onInputBegan,
+				[Roact.Event.InputEnded] = self.onInputEnded,
 				[Roact.Event.Activated] = props.Activated,
 			}, {
 				Image = e("ImageLabel", {
