@@ -73,7 +73,9 @@ function Sidebar:init()
 end
 
 function Sidebar:patchStoryScripts(patch)
-	if self.cleaning then return end
+	if self.cleaning then
+		return
+	end
 
 	local storyScripts = {}
 

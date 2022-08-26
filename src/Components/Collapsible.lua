@@ -27,31 +27,31 @@ function Collapsible:render()
 	local content = self.state.open and self.props[Roact.Children]
 
 	return e(FitComponent, {
+		FitWidth = true,
 		ContainerClass = "Frame",
 		ContainerProps = {
 			BackgroundTransparency = 1,
 		},
 		LayoutClass = "UIListLayout",
 		LayoutProps = {
-			Padding = UDim.new(0, 5),
 			SortOrder = Enum.SortOrder.LayoutOrder,
 		},
 	}, {
 		Topbar = e(IconListItem, {
 			Activated = self.toggle,
-			Icon = self.state.open and
-				Assets.collapse_down or
-				Assets.collapse_right,
+			Icon = self.state.open and Assets.collapse_down or Assets.collapse_right,
 			Text = self.props.Title,
 		}),
 
 		Content = content and e(FitComponent, {
+			FitWidth = true,
 			ContainerClass = "Frame",
 			ContainerProps = {
 				BackgroundTransparency = 1,
 				Position = UDim2.fromOffset(OFFSET, 0),
 			},
 			LayoutClass = "UIListLayout",
+			ExtraSize = Vector2.new(OFFSET, 0),
 		}, {
 			UIPadding = e("UIPadding", {
 				PaddingLeft = UDim.new(0, OFFSET),

@@ -7,10 +7,10 @@ local e = Roact.createElement
 local FitComponent = Roact.Component:extend("FitComponent")
 
 function FitComponent:init()
-	self.size, self.updateSize = Roact.createBinding(0)
+	self.size, self.updateSize = Roact.createBinding(Vector2.new(0, 0))
 
 	self.sizeChanged = function(rbx)
-		self.updateSize(rbx.AbsoluteContentSize.Y)
+		self.updateSize(rbx.AbsoluteContentSize)
 	end
 end
 
@@ -36,8 +36,14 @@ function FitComponent:render()
 	layoutProps[Roact.Change.AbsoluteContentSize] = self.sizeChanged
 	children.Layout = e(props.LayoutClass, layoutProps)
 
-	containerProps.Size = self.size:map(function(y)
-		return UDim2.new(1, 0, 0, y)
+	containerProps.Size = self.size:map(function(size)
+		if props.ExtraSize then
+			size += props.ExtraSize
+		end
+		if props.FitWidth then
+			return UDim2.fromOffset(size.x, size.y)
+		end
+		return UDim2.new(1, 0, 0, size.y)
 	end)
 
 	containerProps[Roact.Children] = children
