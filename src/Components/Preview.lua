@@ -203,36 +203,48 @@ function Preview:render()
 	}, {
 		UIPadding = e("UIPadding", {
 			PaddingLeft = UDim.new(0, 5),
+			PaddingRight = UDim.new(0, 5),
 			PaddingTop = UDim.new(0, 5),
+			PaddingBottom = UDim.new(0, 5),
 		}),
 
-		SelectButton = e("Frame", {
-			AnchorPoint = Vector2.new(1, 1),
+		Tray = e("Frame", {
+			Size = UDim2.fromScale(1, 1),
 			BackgroundTransparency = 1,
-			Position = UDim2.fromScale(0.99, 0.99),
-			Size = UDim2.fromOffset(40, 40),
 			ZIndex = 2,
 		}, {
-			Button = e(FloatingButton, {
-				Activated = self.openSelection,
-				Image = Assets.preview,
-				ImageSize = UDim.new(0, 24),
-				Size = UDim.new(0, 40),
+			Layout = e("UIListLayout", {
+				FillDirection = Enum.FillDirection.Horizontal,
+				Padding = UDim.new(0, 5),
+				HorizontalAlignment = Enum.HorizontalAlignment.Right,
+				VerticalAlignment = Enum.VerticalAlignment.Bottom,
+				SortOrder = Enum.SortOrder.LayoutOrder,
 			}),
-		}),
 
-		ExpandButton = e("Frame", {
-			AnchorPoint = Vector2.new(1, 1),
-			BackgroundTransparency = 1,
-			Position = UDim2.new(0.99, -45, 0.99),
-			Size = UDim2.fromOffset(40, 40),
-			ZIndex = 2,
-		}, {
-			Button = e(FloatingButton, {
-				Activated = self.expandSelection,
-				Image = "rbxasset://textures/ui/VR/toggle2D.png",
-				ImageSize = UDim.new(0, 24),
-				Size = UDim.new(0, 40),
+			ExpandButton = e("Frame", {
+				BackgroundTransparency = 1,
+				Size = UDim2.fromOffset(40, 40),
+				LayoutOrder = 1,
+			}, {
+				Button = e(FloatingButton, {
+					Activated = self.expandSelection,
+					Image = "rbxasset://textures/ui/VR/toggle2D.png",
+					ImageSize = UDim.new(0, 24),
+					Size = UDim.new(0, 40),
+				}),
+			}),
+
+			SelectButton = e("Frame", {
+				BackgroundTransparency = 1,
+				Size = UDim2.fromOffset(40, 40),
+				LayoutOrder = 2,
+			}, {
+				Button = e(FloatingButton, {
+					Activated = self.openSelection,
+					Image = Assets.preview,
+					ImageSize = UDim.new(0, 24),
+					Size = UDim.new(0, 40),
+				}),
 			}),
 		}),
 
