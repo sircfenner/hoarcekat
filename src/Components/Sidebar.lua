@@ -237,6 +237,9 @@ function Sidebar:render()
 						BackgroundTransparency = 1,
 						LayoutOrder = 2,
 						Size = UDim2.new(1, 0, 1, -20),
+						BorderSizePixel = 0,
+						ScrollBarThickness = 10,
+						ScrollBarImageColor3 = theme:GetColor("AttributeCog"),
 					},
 				}, storyLists),
 			})
